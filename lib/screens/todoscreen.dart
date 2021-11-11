@@ -3,8 +3,6 @@ import '../widgets/tasks_list.dart';
 import './add-task.dart';
 
 class TodoScreen extends StatelessWidget {
-  TodoScreen({Key? key}) : super(key: key);
-
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.deepOrange,

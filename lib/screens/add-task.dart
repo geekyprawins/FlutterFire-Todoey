@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import '../backend/cloud-storage.dart';
 
 class AddTaskScreen extends StatelessWidget {
+  CloudStorage cloudStorage = CloudStorage();
+  late String newTaskTitle;
   @override
   Widget build(BuildContext context) {
-    CloudStorage cloudStorage = CloudStorage();
-    late String newTaskTitle;
     return Container(
       color: Color(0xff757575),
       child: Container(

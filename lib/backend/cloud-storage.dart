@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import '../models/task.dart';
 
 class CloudStorage {
@@ -7,6 +6,12 @@ class CloudStorage {
 
   Future createNewTask(String title) async {
     return await todosCollection.add({"title": title, "isDone": false});
+  }
+
+  Future addDummyTasks() async {
+    for (int i = 1; i < 100; i++) {
+      await todosCollection.add({"title": "Task $i", "isDone": false});
+    }
   }
 
   Future finishTask(id) async {
@@ -20,16 +25,18 @@ class CloudStorage {
   List<Task>? todoFromFirestore(QuerySnapshot<Map<String, dynamic>> snapshot) {
     return snapshot.docs.map((e) {
       return Task(
-        // isDone: false,
         isDone: e.data()["isDone"],
         name: e.data()["title"],
-        // name: "Go to Gym",
         id: e.id,
       );
     }).toList();
   }
 
-  Stream<List<Task>?> listTodos() {
-    return todosCollection.snapshots().map(todoFromFirestore);
+  Stream<List<Task>?> listTodos(int x) {
+    return todosCollection
+        .limit(x)
+        .orderBy("title")
+        .snapshots()
+        .map(todoFromFirestore);
   }
 }
